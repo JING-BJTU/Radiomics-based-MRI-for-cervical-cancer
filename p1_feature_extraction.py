@@ -37,7 +37,7 @@ def feature_extractor_nii(nimg,mak): # nimg: the directory of dcm files,mak: mha
     feature_data = np.hstack((nimg, mak, list(features.values())))
     all_feature_column = np.hstack(('img_path', 'mak_path', [p for p in list(features.keys())]))
     all_feature = DataFrame(data=feature_data, index=all_feature_column).T
-    all_feature.to_csv('/data1_vision4/jjcui/37_QingDaFuYuan/csv_files/' + mask_name + '_' + 'features.csv')
+    all_feature.to_csv(mask_name + '_' + 'features.csv')
 
     return all_feature
 
