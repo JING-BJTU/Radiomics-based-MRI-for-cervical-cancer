@@ -23,13 +23,8 @@ def feature_extractor_nii(nimg,mak): # nimg: the directory of dcm files,mak: mha
     mask.SetSpacing(img.GetSpacing())
 
     mask.SetDirection(img.GetDirection())
-    settings = {'binWidth': 25,
-                'interpolator': sitk.sitkBSpline,
-                'label': int(np.unique(mask_array)[-1]),
-                'resampledPixelSpacing': (1,1,1),
-                'geometryTolerance': 0.0001,
-              }
-    extractor = RadiomicsFeatureExtractor(**settings)
+
+    extractor = RadiomicsFeatureExtractor(paramsFile)
     extractor.enableAllImageTypes()
     extractor.enableAllFeatures()
     features = extractor.execute(img, mask)
@@ -37,7 +32,7 @@ def feature_extractor_nii(nimg,mak): # nimg: the directory of dcm files,mak: mha
     feature_data = np.hstack((nimg, mak, list(features.values())))
     all_feature_column = np.hstack(('img_path', 'mak_path', [p for p in list(features.keys())]))
     all_feature = DataFrame(data=feature_data, index=all_feature_column).T
-    all_feature.to_csv(mask_name + '_' + 'features.csv')
+    all_feature.to_csv('mask_name + '_' + 'features.csv')
 
     return all_feature
 
@@ -53,6 +48,9 @@ patient_list.sort()
 series_all = ['DWI', 'T2', 'T1C']
 
 slice_length = int(len(patient_list)/4)
+
+paramsFile = 'settings.yaml'
+
 def feature_ex(num):
 
     patient_list_idx = patient_list[slice_length*(num-1):slice_length*(num)]
