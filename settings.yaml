@@ -1,0 +1,44 @@
+# settings.yaml
+
+# 全局设置
+setting:
+  binWidth: 25
+  resampledPixelSpacing: [1, 1, 1]  # [x, y, z] in mm
+  interpolator: 'sitkBSpline'
+  normalize: true
+  normalizeScale: 100
+  label: 1
+
+# 影像预处理设置
+imageType:
+  Original: {}  # 提取原始影像的特征
+  Wavelet: {}   # 提取小波滤波后影像的特征
+  LoG:
+    sigma: [0.5, 1.0, 2.0, 4.0] # 提取两种不同 sigma 值的 LoG 滤波影像特征
+  Boxmean:{}
+  Additivegaussiannoise:{}
+  Binomialblurimage:{}
+  Curvatureflow:{}
+  Boxsigmaimage:{}
+  Normalize:{}
+  Laplaciansharpening:{}
+  Discretegaussian:{}
+  Mean:{}
+  Specklenoise:{}
+  Recursivegaussian:{}
+  Shotnoise:{}
+	
+
+# 特征类别开关与参数设置
+featureClass:
+  shape: null # 'null' 表示启用该类别并使用默认参数
+  firstorder: null
+  glcm:
+    # GLCM 特定的参数
+    symmetric: true
+    distances: [1]
+  glrlm: null
+  # 如果不想提取某一类特征，可以直接注释掉或删除该行
+  # glszm: null
+  ngtdm: null
+  gldm: null
